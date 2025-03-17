@@ -1,25 +1,24 @@
 class Solution {
     public int[][] divideArray(int[] nums, int k) {
-        // Sort the array
-        Arrays.sort(nums);
-
+        int maxx = 0;
+        for (int num : nums) {
+            maxx = Math.max(maxx,num);
+        }
+        int[] freq = new int[maxx+1];
+        for (int num : nums) {
+            freq[num]++;
+        }
         int n = nums.length;
-        if (n % 3 != 0) {
-            return new int[0][0]; // Return an empty 2D array if size is not a multiple of 3
-        }
-
-        int rows = n / 3; // Number of rows in the result
-        int[][] ans = new int[rows][3]; // Initialize the 2D array
-
-        for (int i = 0, row = 0; i < nums.length; i += 3, row++) {
-            // Check the condition
-            if (nums[i + 2] - nums[i] > k) {
-                return new int[0][0]; // Return empty 2D array if condition fails
+        int[][] ans = new int[n/3][3];
+        int ind = 0;
+        for (int i = 0; i < n/3; i++) {
+            for (int j = 0; j < 3; j++) {
+                while (freq[ind] == 0) ind++;
+                ans[i][j] = ind;
+                --freq[ind];
             }
-            // Fill the 2D array row by row
-            ans[row] = new int[]{nums[i], nums[i + 1], nums[i + 2]};
+            if (ans[i][2]-ans[i][0] > k) return new int[][]{};
         }
-
-        return ans; // Return the filled 2D array
+        return ans;
     }
 }
