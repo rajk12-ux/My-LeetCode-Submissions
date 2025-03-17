@@ -1,21 +1,24 @@
 class Solution {
     public char findTheDifference(String s, String t) {
-        HashMap<Character, Integer> map = new HashMap<>();
+        int[] frequency = new int[26]; // Array to store frequency of each character
 
-        // Count characters in string `s`
+        // Increment counts for characters in string `s`
         for (char c : s.toCharArray()) {
-            map.put(c, map.getOrDefault(c, 0) + 1);
+            frequency[c - 'a']++;
         }
 
-        // Adjust counts using characters from string `t`
+        // Decrement counts for characters in string `t`
         for (char c : t.toCharArray()) {
-            map.put(c, map.getOrDefault(c, 0) - 1);
-            if (map.get(c) == 0) {
-                map.remove(c);
+            frequency[c - 'a']--;
+        }
+
+        // Find the character with non-zero frequency
+        for (int i = 0; i < 26; i++) {
+            if (frequency[i] != 0) {
+                return (char) ('a' + i);
             }
         }
 
-        // The remaining character is the answer
-        return map.keySet().iterator().next();
+        return 'a'; // Default return value (in case no extra character is found)
     }
 }
