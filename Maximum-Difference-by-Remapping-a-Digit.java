@@ -1,49 +1,39 @@
 class Solution {
     public int minMaxDifference(int num) {
-        // Convert the number to a string
-        String snum = Integer.toString(num);
+        // Convert the number to a character array for direct manipulation
+        char[] snum_max = String.valueOf(num).toCharArray();
+        char[] snum_min = String.valueOf(num).toCharArray();
+        
+        // Get the length of the number
+        int n = snum_max.length;
 
-        // Create copies for max and min calculations
-        StringBuilder snumMax = new StringBuilder(snum);
-        StringBuilder snumMin = new StringBuilder(snum);
+        // Variables to track the first non-'9' digit and the first digit
+        char firstNoneNine = snum_max[0];
+        char firstNum = snum_max[0];
 
-        // Max value calculation
-        int i = 0;
-        if (snum.charAt(0) == '9') {
-            int j = 0;
-            while (j < snum.length() && snum.charAt(j) == '9') j++;
-            if (j < snum.length()) {
-                char toReplace = snum.charAt(j);
-                for (int k = 0; k < snumMax.length(); k++) {
-                    if (snumMax.charAt(k) == toReplace) {
-                        snumMax.setCharAt(k, '9');
-                    }
-                }
-            }
-        } else {
-            char toReplace = snum.charAt(0);
-            for (int k = 0; k < snumMax.length(); k++) {
-                if (snumMax.charAt(k) == toReplace) {
-                    snumMax.setCharAt(k, '9');
-                }
+        // Find the first non-'9' character in the number
+        for (int i = 0; i < n; i++) {
+            if (snum_max[i] != '9') {
+                firstNoneNine = snum_max[i];
+                break; // Exit the loop as soon as we find it
             }
         }
 
-        // Min value calculation
-        char toReplaceMin = snum.charAt(0);
-        for (int k = 0; k < snumMin.length(); k++) {
-            if (snumMin.charAt(k) == toReplaceMin) {
-                snumMin.setCharAt(k, '0');
+        // Replace all occurrences of the first non-'9' character with '9' in snum_max
+        for (int i = 0; i < n; i++) {
+            if (snum_max[i] == firstNoneNine) {
+                snum_max[i] = '9';
             }
         }
 
-        // Debugging: Print final results
-        System.out.println("snumMax = " + snumMax + ", size = " + snumMax.length());
-        System.out.println("snumMin = " + snumMin + ", size = " + snumMin.length());
+        // Replace all occurrences of the first digit with '0' in snum_min
+        for (int i = 0; i < n; i++) {
+            if (snum_min[i] == firstNum) {
+                snum_min[i] = '0';
+            }
+        }
 
-        // Calculate the difference
-        int maxNum = Integer.parseInt(snumMax.toString());
-        int minNum = Integer.parseInt(snumMin.toString());
-        return maxNum - minNum;
+        // Compute the difference between the maximum and minimum values
+        return Integer.parseInt(String.valueOf(snum_max)) - Integer.parseInt(String.valueOf(snum_min));
     }
 }
