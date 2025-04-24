@@ -1,22 +1,21 @@
 class Solution {
 public:
     int minZeroArray(vector<int>& nums, vector<vector<int>>& queries) {
-        int zc=0;
-        for(int i:nums){
-            if(i==0)++zc;
-        }
-        if(zc==nums.size())return 0;
-        for(int i=0;i<queries.size();i++){
-            for(int j=queries[i][0];j<=queries[i][1];j++){
-                if(nums[j]==0)continue;
-                if(nums[j]<=queries[i][2]){
-                    nums[j]=0;
-                    ++zc;
-                    if(zc==nums.size())return i+1;
-                }
-                else nums[j] -= queries[i][2];
+        vector<int> diff((int)nums.size()+1,0);
+        int curr=0,summ=0;//zero till index and sum reached 
+        for(int i=0;i<nums.size();i++){
+            while(summ+diff[i] < nums[i]){
+                if(curr == queries.size())return -1;//reached query end
+                int l=max(queries[curr][0],i);
+                int r=queries[curr][1];
+                int mar=queries[curr][2];
+                ++curr;
+                if(r < i)continue;
+                diff[l] += mar;
+                diff[r+1] -= mar;
             }
+            summ += diff[i];
         }
-        return -1;
+        return curr;
     }
 };
