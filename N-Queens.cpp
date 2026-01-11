@@ -1,6 +1,6 @@
 1class Solution {
 2public:
-3    void final_board(vector<string> prev_board,int row_cov,vector<bool> col,vector<bool> diag/*i-j+n-1=k*/,vector<bool> anti_diag/*i+j=k*/,vector<vector<string>> &ans,int &n){
+3    void final_board(vector<string> prev_board,int row_cov,vector<bool> &col,vector<bool> &diag/*i-j+n-1=k*/,vector<bool> &anti_diag/*i+j=k*/,vector<vector<string>> &ans,int n){
 4        if(row_cov==n){
 5            ans.push_back(prev_board);
 6            return ;
