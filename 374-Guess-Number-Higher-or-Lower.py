@@ -7,9 +7,8 @@
  * int guess(int num);
  */
 
-class Solution {
-public:
-    int guessNumber(int n) {
+public class Solution extends GuessGame {
+    public int guessNumber(int n) {
         int l=1,r=n;
         while(l<=r){
             int mid=l+(r-l)/2;
@@ -24,4 +23,4 @@ public:
         }
         return 0;
     }
-};
+}
