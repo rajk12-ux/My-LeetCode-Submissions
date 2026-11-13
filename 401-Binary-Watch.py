@@ -1,39 +1,31 @@
-class Solution {
+class Solution(object):
 
-    void addtime(int min, int hour, int turnedOn, int curr, List<String> ans) {
+    def addtime(self, min, hour, turnedOn, curr, ans):
 
-        if(turnedOn == 0) {
-            int m = min;
-            int h = hour;
+        if turnedOn == 0:
+            m = min
+            h = hour
 
-            if(h <= 11 && m <= 59) {
-                String s = (m < 10 ? "0" : "") + m;
-                ans.add(h + ":" + s);
-            }
-            return;
-        }
+            if h <= 11 and m <= 59:
+                s = ("0" if m < 10 else "") + str(m)
+                ans.append(str(h) + ":" + s)
+            return
 
-        for(int i = curr; i < 10; i++) {
+        for i in range(curr, 10):
 
-            if(i < 6)
-                min |= (1 << i);
-            else
-                hour |= (1 << (i - 6));
+            if i < 6:
+                min |= (1 << i)
+            else:
+                hour |= (1 << (i - 6))
 
-            addtime(min, hour, turnedOn - 1, i + 1, ans);
+            self.addtime(min, hour, turnedOn - 1, i + 1, ans)
 
-            if(i < 6)
-                min &= ~(1 << i);
-            else
-                hour &= ~(1 << (i - 6));
-        }
-    }
+            if i < 6:
+                min &= ~(1 << i)
+            else:
+                hour &= ~(1 << (i - 6))
 
-    public List<String> readBinaryWatch(int turnedOn) {
-        List<String> ans = new ArrayList<>();
-
-        addtime(0, 0, turnedOn, 0, ans);
-
-        return ans;
-    }
-}
+    def readBinaryWatch(self, turnedOn):
+        ans = []
+        self.addtime(0, 0, turnedOn, 0, ans)
+        return ans
