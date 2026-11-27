@@ -1,13 +1,12 @@
 class Solution {
-public:
-    vector<int> constructRectangle(int area) {
-        int root=(int)sqrt(area);
+    public int[] constructRectangle(int area) {
+        int root=(int)Math.sqrt(area);
         while(root>1){
             if(area%root==0){
-                return {area/root,root};
+                return new int[]{area/root,root};
             }
             --root;
         }
-        return {area,1};
+        return new int[]{area,1};
     }
-};
+}
